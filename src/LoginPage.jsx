@@ -26,13 +26,11 @@ const LoginPage = () => {
   });
 
   const onSubmit = (data) => {
-    // Simulate login - in real app, you'd make an API call here
     login({
       email: data.email,
-      name: "John Doe", // You'd get this from your API
+      name: "John Doe",
     });
 
-    // Redirect to the page they were trying to access, or dashboard
     const from = location.state?.from?.pathname || "/dashboard";
     navigate(from, { replace: true });
   };
@@ -42,10 +40,10 @@ const LoginPage = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="bg-white py-8 px-6 shadow-lg rounded-lg">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 bg-red-300">
+            <h2 className="text-3xl font-bold text-gray-900 text-left">
               Sign in
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-gray-600 text-left">
               Enter your credentials to access your account
             </p>
           </div>
