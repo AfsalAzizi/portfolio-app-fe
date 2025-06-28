@@ -6,6 +6,7 @@ const Sidebar = () => {
 
   const menuItems = [
     { path: "/dashboard", label: "Dashboard", icon: "📊" },
+    { path: "/dashboard/portfolio", label: "Portfolio", icon: "📈" },
     { path: "/dashboard/assets", label: "Assets", icon: "💼" },
     { path: "/dashboard/orders", label: "Orders", icon: "📋" },
   ];

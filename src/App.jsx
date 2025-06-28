@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AuthRedirect from "./components/AuthRedirect";
 import Dashboard from "./pages/Dashboard";
+import Portfolio from "./pages/Portfolio";
 import Assets from "./pages/Assets";
 import Orders from "./pages/Orders";
 
@@ -25,6 +26,7 @@ function App() {
             }
           >
             <Route index element={<Dashboard />} />
+            <Route path="portfolio" element={<Portfolio />} />
             <Route path="assets" element={<Assets />} />
             <Route path="orders" element={<Orders />} />
           </Route>
