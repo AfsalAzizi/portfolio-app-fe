@@ -61,73 +61,19 @@ const Assets = () => {
             Portfolio Holdings
           </h3>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Stock
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Shares
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Avg Price
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Current Price
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Total Value
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Gain/Loss
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {assets.map((asset, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">
-                        {asset.symbol}
-                      </div>
-                      <div className="text-sm text-gray-500">{asset.name}</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {asset.shares}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    ${asset.avgPrice.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    ${asset.currentPrice.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    ${asset.totalValue.toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div
-                      className={`text-sm font-medium ${
-                        asset.positive ? "text-green-600" : "text-red-600"
-                      }`}
-                    >
-                      {asset.gainLoss}
-                    </div>
-                    <div
-                      className={`text-xs ${
-                        asset.positive ? "text-green-500" : "text-red-500"
-                      }`}
-                    >
-                      {asset.gainLossPercent}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="flex flex-row">
+        {assets?.map((el, i) => <>
+              <div key={el.symbol+i} class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm m-4 min-w-64">
+          <a href="#">
+              <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{el?.symbol}</h5>
+            </a>
+            <p className="my-2 text-gray-500">{el.name}</p>
+            <p class="mb-3 font-normal text-gray-700">Avg. Price: { el?.avgPrice}</p>
+          <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+              Buy / Sell
+          </a>
+      </div>
+        </>)}
         </div>
       </div>
     </div>
