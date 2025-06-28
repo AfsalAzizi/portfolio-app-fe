@@ -2,6 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "./hooks/useAuth";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -11,6 +13,10 @@ const LoginSchema = Yup.object().shape({
 });
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -20,8 +26,15 @@ const LoginPage = () => {
   });
 
   const onSubmit = (data) => {
-    // Handle login logic here
-    alert(JSON.stringify(data, null, 2));
+    // Simulate login - in real app, you'd make an API call here
+    login({
+      email: data.email,
+      name: "John Doe", // You'd get this from your API
+    });
+
+    // Redirect to the page they were trying to access, or dashboard
+    const from = location.state?.from?.pathname || "/dashboard";
+    navigate(from, { replace: true });
   };
 
   return (

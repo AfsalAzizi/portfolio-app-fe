@@ -1,12 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
-  const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
-    // Add logout logic here
-    navigate("/login");
+    logout();
   };
 
   return (
@@ -22,9 +21,11 @@ const Header = () => {
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-              JD
+              {user?.name?.charAt(0) || "U"}
             </div>
-            <span className="text-sm font-medium text-gray-700">John Doe</span>
+            <span className="text-sm font-medium text-gray-700">
+              {user?.name || "User"}
+            </span>
           </div>
 
           <button
