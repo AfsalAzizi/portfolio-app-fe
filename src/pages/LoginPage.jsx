@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 import Cookies from "js-cookie";
 
 const LoginSchema = Yup.object().shape({
@@ -33,15 +33,6 @@ const LoginPage = () => {
     setError("");
 
     try {
-      console.log(
-        "Making API call to:",
-        "http://localhost:3000/api/auth/login"
-      );
-      console.log("Request data:", {
-        emailAddress: data.email,
-        password: data.password,
-      });
-
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
@@ -53,9 +44,7 @@ const LoginPage = () => {
         }),
       });
 
-      console.log("Response status:", response.status);
       const result = await response.json();
-      console.log("Response data:", result);
 
       if (!response.ok) {
         throw new Error(result.message || "Login failed");

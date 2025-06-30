@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AuthContext } from "./AuthContext";
+import Cookies from "js-cookie";
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -9,35 +10,54 @@ export const AuthProvider = ({ children }) => {
   const login = (userData) => {
     setIsAuthenticated(true);
     setUser(userData);
-    // You can also store in localStorage here
-    localStorage.setItem("isAuthenticated", "true");
-    localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  const logout = () => {
-    setIsAuthenticated(false);
-    setUser(null);
-    // Clear localStorage
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("user");
+  const logout = async () => {
+    try {
+      const token = Cookies.get("token");
+
+      if (token) {
+        // Call backend logout endpoint
+        await fetch("http://localhost:3000/api/auth/logout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Logout API error:", error);
+      // Continue with logout even if API call fails
+    } finally {
+      // Clear local state and cookies
+      setIsAuthenticated(false);
+      setUser(null);
+      Cookies.remove("token");
+      Cookies.remove("sessionId");
+      Cookies.remove("user");
+    }
   };
 
   // Check for existing authentication on mount
   React.useEffect(() => {
     const checkAuth = () => {
       try {
-        const storedAuth = localStorage.getItem("isAuthenticated");
-        const storedUser = localStorage.getItem("user");
+        const token = Cookies.get("token");
+        const sessionId = Cookies.get("sessionId");
+        const userCookie = Cookies.get("user");
 
-        if (storedAuth === "true" && storedUser) {
+        if (token && sessionId && userCookie) {
+          const userData = JSON.parse(userCookie);
           setIsAuthenticated(true);
-          setUser(JSON.parse(storedUser));
+          setUser(userData);
         }
       } catch (error) {
         console.error("Error checking authentication:", error);
         // Clear invalid data
-        localStorage.removeItem("isAuthenticated");
-        localStorage.removeItem("user");
+        Cookies.remove("token");
+        Cookies.remove("sessionId");
+        Cookies.remove("user");
       } finally {
         setIsLoading(false);
       }
